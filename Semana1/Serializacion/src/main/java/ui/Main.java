@@ -31,7 +31,6 @@ public class Main {
         String[] lista = ruta.list();
         for (int i = 0; i < lista.length; i++) {
             System.out.println(lista[i]);
-
         }
 
         System.out.println("*****************************************");
@@ -48,5 +47,16 @@ public class Main {
         main.people.addPetToPerson("pet5", 1, 4);
 
         main.people.save();
+        main.people.saveCsvFile();
+
+        System.out.println("********************************");
+
+        main.people.cleanArray();
+
+        System.out.println(main.people.getPeople());
+
+        main.people.loadCsvFile();
+
+        System.out.println(main.people.getPeople());
     }
 }
