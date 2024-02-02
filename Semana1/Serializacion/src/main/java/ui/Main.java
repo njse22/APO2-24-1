@@ -40,6 +40,13 @@ public class Main {
         main.people.addPersonToList("person3", 10, "A30");
         main.people.addPersonToList("person4", 10, "A40");
         main.people.addPersonToList("person5", 10, "A50");
+
+        main.people.addPetToPerson("pet1", 1, 0);
+        main.people.addPetToPerson("pet2", 1, 1);
+        main.people.addPetToPerson("pet3", 1, 2);
+        main.people.addPetToPerson("pet4", 1, 3);
+        main.people.addPetToPerson("pet5", 1, 4);
+
         main.people.save();
     }
 }
