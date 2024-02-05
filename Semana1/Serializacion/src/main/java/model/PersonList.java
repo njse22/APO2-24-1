@@ -168,6 +168,16 @@ public class PersonList {
         }
     }
 
+    public Person searchPersonById(String id){
+        Person found = null;
+        for (int i = 0; i <people.size(); i++) {
+            if(people.get(i).getId().equals(id)){
+                found = people.get(i);
+            }
+        }
+        return found;
+    }
+
     public ArrayList<Person> getPeople() {
         return people;
     }
