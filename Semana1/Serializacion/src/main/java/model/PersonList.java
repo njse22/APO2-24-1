@@ -20,18 +20,12 @@ public class PersonList {
         listCsv = new File(data.getAbsolutePath()+"/people.csv");
     }
 
-    private void createResources(){
+    private void createResources() throws IOException {
         if(!data.exists()) {
             data.mkdir();
             if (!listJson.exists()) {
-                try {
 
-                    listJson.createNewFile();
-
-                } catch (IOException e) {
-
-                    System.err.println("error");
-                }
+                listJson.createNewFile();
             }
         }
     }
@@ -52,8 +46,6 @@ public class PersonList {
 
     public void save() {
 
-        // Validar que los recursos existan
-        createResources();
 
         // llamar a la librería que nos va ayudar a serializar la información
         Gson gson = new Gson();
@@ -61,6 +53,9 @@ public class PersonList {
         String dataJson = gson.toJson(people);
 
         try {
+            // Validar que los recursos existan
+            createResources();
+
             // File: data --> Donde se almacena la información
             // FileOutputStream: fos --> Enlazador de la información
             FileOutputStream fos = new FileOutputStream(this.listJson);
@@ -76,10 +71,10 @@ public class PersonList {
             // cerrar el flujo de información
             writer.close();
 
-        } catch (FileNotFoundException e) {
-            System.err.println("error 1");
+        } catch ( FileNotFoundException e){
+            e.printStackTrace();
         } catch (IOException e){
-            System.err.println("error 2");
+            e.printStackTrace();
         }
     }
 
@@ -95,17 +90,12 @@ public class PersonList {
             // BufferWriter: writer --> Escritor de la información
             BufferedReader reader = new BufferedReader(new InputStreamReader(fis));
 
-
         } catch (FileNotFoundException e) {
             System.err.println("error 1");
-        } catch (IOException e){
-            System.err.println("error 2");
         }
     }
 
     public void saveCsvFile(){
-        // Validar que los recursos existan
-        createResources();
 
         // la cadena de texto con el formato que voy a guardar
         String dataCsv = "";
@@ -116,6 +106,9 @@ public class PersonList {
         }
 
         try {
+            // Validar que los recursos existan
+            createResources();
+
             // File: data --> Donde se almacena la información
             // FileOutputStream: fos --> Enlazador de la información
             FileOutputStream fos = new FileOutputStream(this.listCsv);

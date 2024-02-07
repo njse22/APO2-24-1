@@ -2,8 +2,7 @@ package model;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 public class PersonListTest {
 
@@ -63,7 +62,28 @@ public class PersonListTest {
 
         // Assert
         assertNotNull(personFound);
+    }
+    @Test
+    public void testSearchUserByIdInNotEmptyList(){
+        // init
+        setup2();
 
+        // Act
+        Person personFound = personList.searchPersonById("A70");
+
+        // Assert
+        assertNull(personFound);
     }
 
+    @Test
+    public void testSearchUserByIdInEmptyList(){
+        // init
+        setup1(); // empty list
+
+        // Act
+        Person personFound = personList.searchPersonById("A70");
+
+        // Assert
+        assertNull(personFound);
+    }
 }
