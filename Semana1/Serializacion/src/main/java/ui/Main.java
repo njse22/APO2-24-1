@@ -1,5 +1,6 @@
 package ui;
 
+import exceptions.DuplicatePersonException;
 import model.PersonList;
 
 import java.io.File;
@@ -34,11 +35,16 @@ public class Main {
         }
 
         System.out.println("*****************************************");
-        main.people.addPersonToList("person1", 10, "A10");
-        main.people.addPersonToList("person2", 10, "A20");
-        main.people.addPersonToList("person3", 10, "A30");
-        main.people.addPersonToList("person4", 10, "A40");
-        main.people.addPersonToList("person5", 10, "A50");
+        try {
+            main.people.addPersonToList("person1", 10, "A10");
+            main.people.addPersonToList("person1", 10, "A10");
+            main.people.addPersonToList("person2", 10, "A20");
+            main.people.addPersonToList("person3", 10, "A30");
+            main.people.addPersonToList("person4", 10, "A40");
+            main.people.addPersonToList("person5", 10, "A50");
+        } catch (DuplicatePersonException e) {
+            e.printStackTrace();
+        }
 
         main.people.addPetToPerson("pet1", 1, 0);
         main.people.addPetToPerson("pet2", 1, 1);

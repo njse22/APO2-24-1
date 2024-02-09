@@ -4,6 +4,8 @@ import java.io.*;
 import java.util.ArrayList;
 
 import com.google.gson.Gson;
+import exceptions.DuplicatePersonException;
+import exceptions.PersonDoesNotExist;
 
 public class PersonList {
 
@@ -15,6 +17,11 @@ public class PersonList {
     public PersonList() {
         people = new ArrayList<>();
         File projectDir = new File(System.getProperty("user.dir"));
+        // linux -> /home/i2t/Workspace/
+        // Win -> C:\Users\i2t\Workspace\
+
+        // win -> data = new File(projectDir+"\\src\\main\\resources\\data\\");
+
         data = new File(projectDir+"/src/main/resources/data/");
         listJson = new File(data.getAbsolutePath()+"/people.json");
         listCsv = new File(data.getAbsolutePath()+"/people.csv");
@@ -34,9 +41,33 @@ public class PersonList {
         people.removeAll(people);
     }
 
-    public void addPersonToList(String name, int age, String id){
+    // Declarar que este método puede lanzar una exception
+    public void addPersonToList(String name, int age, String id) throws DuplicatePersonException{
         Person p = new Person(name, age, id);
-        people.add(p);
+        Person found = searchPersonById(p.getId());
+        if(found == null)
+            people.add(p);
+        else {
+            // Lanzar la exception propia
+            throw new DuplicatePersonException("La persona con este identificador: "+ id + " ya esta registrada");
+        }
+
+    }
+
+    public Person searchPersonById(String id){
+        Person found = null;
+        for (int i = 0; i <people.size(); i++) {
+            if(people.get(i).getId().equals(id)){
+                found = people.get(i);
+            }
+        }
+
+        // Exception mal planteada
+        // if(found == null){
+        //     throw new PersonDoesNotExist("Esta persona no existe en la lista");
+        // }
+
+        return found;
     }
 
     public void addPetToPerson(String name, int age, int idx){
@@ -90,8 +121,20 @@ public class PersonList {
             // BufferWriter: writer --> Escritor de la información
             BufferedReader reader = new BufferedReader(new InputStreamReader(fis));
 
+            String line = "";
+            String dataJson = "";
+
+            while ( (line = reader.readLine()) != null ){
+                dataJson += line;
+            }
+            reader.close();
+
+            people = gson.fromJson(dataJson, people.getClass());
+
         } catch (FileNotFoundException e) {
             System.err.println("error 1");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -161,15 +204,6 @@ public class PersonList {
         }
     }
 
-    public Person searchPersonById(String id){
-        Person found = null;
-        for (int i = 0; i <people.size(); i++) {
-            if(people.get(i).getId().equals(id)){
-                found = people.get(i);
-            }
-        }
-        return found;
-    }
 
     public ArrayList<Person> getPeople() {
         return people;

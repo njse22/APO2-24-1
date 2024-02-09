@@ -1,5 +1,6 @@
 package model;
 
+import exceptions.DuplicatePersonException;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -14,11 +15,16 @@ public class PersonListTest {
 
     public void setup2(){
         personList = new PersonList();
-        personList.addPersonToList("person1", 10, "A10");
-        personList.addPersonToList("person2", 20, "A20");
-        personList.addPersonToList("person3", 30, "A30");
-        personList.addPersonToList("person4", 40, "A40");
-        personList.addPersonToList("person5", 50, "A50");
+        try{
+            personList.addPersonToList("person1", 10, "A10");
+            personList.addPersonToList("person2", 20, "A20");
+            personList.addPersonToList("person3", 30, "A30");
+            personList.addPersonToList("person4", 40, "A40");
+            personList.addPersonToList("person5", 50, "A50");
+        }
+        catch (DuplicatePersonException e){
+            e.printStackTrace();
+        }
 
     }
 
@@ -26,13 +32,25 @@ public class PersonListTest {
     public void test1(){
 
         // init
-        setup1();
+        setup1(); // Empty list
 
         // act
-        personList.addPersonToList("person1", 10, "A10");
+        boolean isException = false;
+        try{
+            personList.addPersonToList("person1", 10, "A10");
+        }
+        catch (DuplicatePersonException e){
+            isException = true;
+        }
 
         // assert
         assertEquals(1, personList.getPeople().size());
+
+        assertEquals(personList.getPeople().get(0).getName(), "person1");
+        assertEquals(personList.getPeople().get(0).getAge(), 10);
+        assertEquals(personList.getPeople().get(0).getId(), "A10");
+
+        assertFalse(isException);
 
     }
 
@@ -40,15 +58,19 @@ public class PersonListTest {
     public void test2(){
 
         // init
-        setup1();
+        setup2();
 
         // act
-        personList.addPersonToList("person1", 10, "A10");
+        boolean isException = false;
+        try {
+            personList.addPersonToList("person1", 10, "A10");
+        }
+        catch (DuplicatePersonException e){
+            isException = true;
+        }
 
         // assert
-        assertEquals(personList.getPeople().get(0).getName(), "person1");
-        assertEquals(personList.getPeople().get(0).getAge(), 10);
-        assertEquals(personList.getPeople().get(0).getId(), "A10");
+        assertTrue(isException);
 
     }
 
