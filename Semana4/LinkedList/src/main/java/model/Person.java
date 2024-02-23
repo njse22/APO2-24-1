@@ -6,6 +6,10 @@ public class Person {
     private String id;
     private Person next;
 
+    public Person(String name, String id) {
+        this.name = name;
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -30,4 +34,5 @@ public class Person {
     public void setNext(Person next) {
         this.next = next;
     }
+
 }
