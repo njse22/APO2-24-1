@@ -31,7 +31,7 @@ public class Recursion {
         }
         else {
             msj += n + ", ";
-            msj += count(--n, msj);
+            msj = count(--n, msj);
         }
 
         return msj;
