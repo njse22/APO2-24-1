@@ -13,7 +13,16 @@ public class Main {
 
         System.out.println(r.count(5));
 
+        System.out.println(r.factorialDP(5));
+        System.out.println(r.factorialDP(6));
+
+        System.out.println("***************************");
+        System.out.println(r.fibonnacci(5));
+
     }
+
+
+
 
     public void interativeCount(int n){
         for (int i = n; i >= 0 ; i--) {
