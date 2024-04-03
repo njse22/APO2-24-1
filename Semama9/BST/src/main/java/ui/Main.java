@@ -24,5 +24,9 @@ public class Main {
 
         System.out.println("***************************************");
         System.out.println(tree.search(49));
+
+        System.out.println("***************************************");
+        System.out.println(tree.getMin());
+
     }
 }

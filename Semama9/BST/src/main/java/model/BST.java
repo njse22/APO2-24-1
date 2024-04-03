@@ -1,5 +1,8 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class BST<T extends Comparable<T>> {
 
     private Node<T> root;
@@ -19,7 +22,7 @@ public class BST<T extends Comparable<T>> {
     // método recursivo -> activado por un trigger
     private void add(Node<T> node, Node<T> current){
         // Evaluar valor del Nodo
-        if(current.getValue().compareTo(node.getValue()) < 0){
+        if(current.getValue().compareTo(node.getValue()) <= 0){
             // se agrega por derecha
             if(current.getRight() == null){
                 // caso base
@@ -75,6 +78,50 @@ public class BST<T extends Comparable<T>> {
 
         return found;
     }
+
+    public T getMin(){
+        T found = null;
+        // el árbol no estya vacio
+        // caso base
+        if(root != null){
+            found = getMin(root);
+        }
+        return found;
+    }
+
+    // métod recursivo
+    private T getMin(Node<T> current){
+        T found = null;
+        if(current.getLeft() != null){
+            found = getMin(current.getLeft());
+        }
+        else {
+           found = current.getValue();
+        }
+        return found;
+    }
+
+    public List<T> getList(){
+        ArrayList<T> elements = null;
+        if(root != null){
+            elements = new ArrayList<>();
+            getList(root, elements);
+        }
+        return elements;
+    }
+
+    private List<T> getList(Node<T> current, ArrayList<T> elements){
+        if(current != null){
+            getList(current.getLeft(), elements);
+            elements.add(current.getValue());
+            getList(current.getRight(), elements);
+        }
+
+        return elements;
+
+    }
+
+
 
 
     public Node<T> getRoot() {
