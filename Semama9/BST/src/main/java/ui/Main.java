@@ -28,5 +28,8 @@ public class Main {
         System.out.println("***************************************");
         System.out.println(tree.getMin());
 
+        tree.delete(80);
+        System.out.println(tree.getList());
+
     }
 }

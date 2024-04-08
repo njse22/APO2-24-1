@@ -118,7 +118,73 @@ public class BST<T extends Comparable<T>> {
         }
 
         return elements;
+    }
 
+    public boolean delete(T goal){
+        boolean deleted = false;
+
+        // caso base
+        if (root != null){
+            if(root.getValue().compareTo(goal) == 0
+                    && root.getLeft() == null && root.getRight() == null){
+                root = null;
+            }
+            else {
+                delete(null, root, goal);
+            }
+
+        }
+        return deleted;
+    }
+
+    private boolean delete(Node<T> parent, Node<T> current, T goal){
+        boolean deleted = false;
+        // caso base: el nodo actual es el nodo a eliminar
+        if(goal.compareTo(current.getValue()) == 0){
+            // caso base: Nodo hoja
+            if(current.getRight() == null && current.getLeft() == null){
+                // validar si es izquierdo o derecho
+                if(current.getValue().compareTo(parent.getValue()) < 0){
+                    parent.setLeft(null);
+                }
+                else {
+                    parent.setRight(null);
+                }
+            }
+            // Caso Base: el nodo tiene unicamente hijo derecho
+            else if(current.getLeft() == null && current.getRight() != null){
+                // validar si es izquierdo o derecho
+                if(current.getValue().compareTo(parent.getValue()) < 0){
+                    parent.setLeft(current.getRight());
+                }
+                else {
+                   parent.setRight(current.getRight());
+                }
+            }
+            // Caso Base: el nodo tiene unicamente hijo izquierdo
+            else if (current.getLeft() != null && current.getRight() == null) {
+                // validar si es izquierdo o derecho
+                if(current.getValue().compareTo(parent.getValue()) < 0){
+                    parent.setLeft(current.getLeft());
+                }
+                else {
+                    parent.setRight(current.getLeft());
+                }
+            }
+            // Caso Base: el nodo tiene ambos hijos
+            else if (current.getLeft() != null && current.getRight() != null){
+
+            }
+        }
+        // caso recursivo: eliminar pot derecha
+        else if (goal.compareTo(current.getValue()) > 0) {
+            delete(current, current.getRight(), goal);
+        }
+        // caso recursivo: eliminar por izquierda
+        else if (goal.compareTo(current.getValue()) < 0) {
+            delete(current, current.getLeft(), goal);
+        }
+        return deleted;
     }
 
 
