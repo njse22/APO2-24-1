@@ -128,9 +128,10 @@ public class BST<T extends Comparable<T>> {
             if(root.getValue().compareTo(goal) == 0
                     && root.getLeft() == null && root.getRight() == null){
                 root = null;
+                deleted = true;
             }
             else {
-                delete(null, root, goal);
+                deleted = delete(null, root, goal);
             }
 
         }
@@ -146,9 +147,11 @@ public class BST<T extends Comparable<T>> {
                 // validar si es izquierdo o derecho
                 if(current.getValue().compareTo(parent.getValue()) < 0){
                     parent.setLeft(null);
+                    deleted = true;
                 }
                 else {
                     parent.setRight(null);
+                    deleted = true;
                 }
             }
             // Caso Base: el nodo tiene unicamente hijo derecho
@@ -156,9 +159,11 @@ public class BST<T extends Comparable<T>> {
                 // validar si es izquierdo o derecho
                 if(current.getValue().compareTo(parent.getValue()) < 0){
                     parent.setLeft(current.getRight());
+                    deleted = true;
                 }
                 else {
                    parent.setRight(current.getRight());
+                   deleted = true;
                 }
             }
             // Caso Base: el nodo tiene unicamente hijo izquierdo
@@ -166,23 +171,34 @@ public class BST<T extends Comparable<T>> {
                 // validar si es izquierdo o derecho
                 if(current.getValue().compareTo(parent.getValue()) < 0){
                     parent.setLeft(current.getLeft());
+                    deleted = true;
+
                 }
                 else {
                     parent.setRight(current.getLeft());
+                    deleted = true;
                 }
             }
             // Caso Base: el nodo tiene ambos hijos
             else if (current.getLeft() != null && current.getRight() != null){
+                // optener el secesor del nodo a eliminar
+                T sucessor = getMin(current.getRight());
+
+                // remplazar su valor con el nodo a eliminar
+                current.setValue(sucessor);
+
+                // eliminar el sucesor del arbol
+                deleted = delete(current, current.getRight(), sucessor);
 
             }
         }
         // caso recursivo: eliminar pot derecha
         else if (goal.compareTo(current.getValue()) > 0) {
-            delete(current, current.getRight(), goal);
+            deleted = delete(current, current.getRight(), goal);
         }
         // caso recursivo: eliminar por izquierda
         else if (goal.compareTo(current.getValue()) < 0) {
-            delete(current, current.getLeft(), goal);
+            deleted = delete(current, current.getLeft(), goal);
         }
         return deleted;
     }
