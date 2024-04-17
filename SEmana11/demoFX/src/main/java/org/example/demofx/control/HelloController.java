@@ -3,13 +3,26 @@ package org.example.demofx.control;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+
+import java.util.UUID;
 
 public class HelloController {
     @FXML
-    private Label listPersonLabel;
+    private Label nameLabel;
 
     @FXML
-    private TextArea inputInformationTextArea;
+    private TextField nameTextField;
+
+    @FXML
+    private Label ageLabel;
+
+    @FXML
+    private TextField ageTextField;
+
+    @FXML
+    private Label listPersonLabel;
+
 
     private PersonController personController;
 
@@ -19,14 +32,13 @@ public class HelloController {
 
     @FXML
     protected void onAddPerson() {
-        String inputInformation = inputInformationTextArea.getText();
+        String name = nameTextField.getText();
+        int age = Integer.parseInt(ageTextField.getText());
+        String id = UUID.randomUUID().toString();
 
-        String[] information = inputInformation.split(",");
-        personController.addPerson(
-                information[0],
-                Integer.parseInt(information[1]),
-                information[2]);
+        personController.addPerson(name, age, id );
 
         listPersonLabel.setText(personController.printPeople());
+
     }
 }
