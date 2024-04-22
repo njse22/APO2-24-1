@@ -26,7 +26,7 @@ public class HelloController implements Initializable {
 
     @FXML
     public void onAddPerson(ActionEvent actionEvent) {
-        HelloApplication.openWindown("form-add-person.fxml");
+        HelloApplication.openWindow("form-add-person.fxml");
     }
 
     @Override

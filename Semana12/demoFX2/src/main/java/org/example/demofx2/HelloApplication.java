@@ -11,10 +11,10 @@ public class HelloApplication extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        openWindown("hello-view.fxml");
+        openWindow("hello-view.fxml");
     }
 
-    public static void openWindown(String fxml){
+    public static void openWindow(String fxml){
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource(fxml));
             Scene scene = new Scene(fxmlLoader.load(), 320, 240);
